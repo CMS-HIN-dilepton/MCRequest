@@ -39,5 +39,14 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         )
 )
 
-ProductionFilterSequence = cms.Sequence(generator)
+# Next two muon filter are derived from muon reconstruction
+oniafilter = cms.EDFilter("PythiaFilter",
+    Status = cms.untracked.int32(2),
+    MaxEta = cms.untracked.double(1000.0),
+    MinEta = cms.untracked.double(-1000.0),
+    MinPt = cms.untracked.double(0.0),
+    ParticleID = cms.untracked.int32(553)
+)
+
+ProductionFilterSequence = cms.Sequence(generator*oniafilter)
 
