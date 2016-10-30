@@ -5,7 +5,7 @@ from Configuration.Generator.PythiaUEZ2Settings_cfi import *
 generator = cms.EDFilter("PyquenGeneratorFilter",
                          comEnergy = cms.double(8160.0),
                          aBeamTarget = cms.double(208.0),
-                         protonSide = cms.untracked.int32(1),
+                         protonSide = cms.untracked.int32(2),
                          qgpInitialTemperature = cms.double(1.0), ## initial temperature of QGP; allowed range [0.2,2.0]GeV;
                          qgpProperTimeFormation = cms.double(0.1), ## proper time of QGP formation; allowed range [0.01,10.0]fm/c;
                          hadronFreezoutTemperature = cms.double(0.14),
@@ -38,8 +38,8 @@ generator = cms.EDFilter("PyquenGeneratorFilter",
                                                                                      'MDME(199,1) = 0    !W decay into bbar c',
                                                                                      'MDME(200,1) = 0    !W decay into bbar t',
                                                                                      'MDME(205,1) = 0    !W decay into bbar tp',
-                                                                                     'MDME(206,1) = 1    !W decay into e+ nu_e',
-                                                                                     'MDME(207,1) = 0    !W decay into mu+ nu_mu',
+                                                                                     'MDME(206,1) = 0    !W decay into e+ nu_e',
+                                                                                     'MDME(207,1) = 1    !W decay into mu+ nu_mu',
                                                                                      'MDME(208,1) = 0    !W decay into tau+ nu_tau'),
                                                      parameterSets = cms.vstring('pythiaUESettings',
                                                                                  'processParameters')
@@ -49,8 +49,8 @@ generator = cms.EDFilter("PyquenGeneratorFilter",
 
 configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.1 $'),
-    name = cms.untracked.string('$Source: /local/reps/CMSSW/CMSSW/Configuration/GenProduction/python/HI/Pyquen_WToENu_TuneZ2_5023GeV_pythia6_cfi.py,v $'),
-    annotation = cms.untracked.string('PYQUEN-Wenu Tune Z2 at 5.023 TeV')
+    name = cms.untracked.string('$Source: /cvs_server/repositories/CMSSW/CMSSW/Configuration/GenProduction/python/HI/Pyquen_WToMuNu_TuneZ2_5023GeV_pythia6_cfi.py,v $'),
+    annotation = cms.untracked.string('PYQUEN-Wmunu Tune Z2 at 5.023 TeV')
 )
 
 #ProductionFilterSequence = cms.Sequence(hiSignal)

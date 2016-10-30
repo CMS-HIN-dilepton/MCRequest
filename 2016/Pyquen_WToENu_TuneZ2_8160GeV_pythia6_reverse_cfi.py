@@ -5,7 +5,7 @@ from Configuration.Generator.PythiaUEZ2Settings_cfi import *
 generator = cms.EDFilter("PyquenGeneratorFilter",
                          comEnergy = cms.double(8160.0),
                          aBeamTarget = cms.double(208.0),
-                         protonSide = cms.untracked.int32(1),
+                         protonSide = cms.untracked.int32(2),
                          qgpInitialTemperature = cms.double(1.0), ## initial temperature of QGP; allowed range [0.2,2.0]GeV;
                          qgpProperTimeFormation = cms.double(0.1), ## proper time of QGP formation; allowed range [0.01,10.0]fm/c;
                          hadronFreezoutTemperature = cms.double(0.14),

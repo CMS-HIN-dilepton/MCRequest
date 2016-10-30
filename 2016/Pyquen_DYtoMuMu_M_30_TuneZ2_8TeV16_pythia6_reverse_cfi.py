@@ -5,7 +5,7 @@ from Configuration.Generator.PythiaUEZ2Settings_cfi import *
 generator = cms.EDFilter("PyquenGeneratorFilter",
 	comEnergy = cms.double(8160.0),
 	aBeamTarget = cms.double(208.0),
-	protonSide = cms.untracked.int32(1),
+	protonSide = cms.untracked.int32(2),
 	qgpInitialTemperature = cms.double(1.0), ## initial temperature of QGP; allowed range [0.2,2.0]GeV;
 	qgpProperTimeFormation = cms.double(0.1), ## proper time of QGP formation; allowed range [0.01,10.0]fm/c;
 	hadronFreezoutTemperature = cms.double(0.14),
@@ -36,9 +36,9 @@ generator = cms.EDFilter("PyquenGeneratorFilter",
                                         'MDME(177,1)=0     !Z decay into c cbar', 
                                         'MDME(178,1)=0     !Z decay into b bbar', 
                                         'MDME(179,1)=0     !Z decay into t tbar', 
-                                        'MDME(182,1)=1     !Z decay into e- e+', 
+                                        'MDME(182,1)=0     !Z decay into e- e+', 
                                         'MDME(183,1)=0     !Z decay into nu_e nu_ebar', 
-                                        'MDME(184,1)=0     !Z decay into mu- mu+', 
+                                        'MDME(184,1)=1     !Z decay into mu- mu+', 
                                         'MDME(185,1)=0     !Z decay into nu_mu nu_mubar', 
                                         'MDME(186,1)=0     !Z decay into tau- tau+', 
                                         'MDME(187,1)=0     !Z decay into nu_tau nu_taubar', 
@@ -52,8 +52,8 @@ generator = cms.EDFilter("PyquenGeneratorFilter",
 
 configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.1 $'),
-    name = cms.untracked.string('$Source: /local/reps/CMSSW/CMSSW/Configuration/GenProduction/python/HI/Pyquen_DYtoEE_M_30_TuneZ2_5TeV02_pythia6_cfi.py,v $'),
-    annotation = cms.untracked.string('PYQUEN DYee Mass 30 Tune Z2 at 5.023 TeV')
+    name = cms.untracked.string('$Source: /local/reps/CMSSW/CMSSW/Configuration/GenProduction/python/HI/Pyquen_DYtoMuMu_M_30_TuneZ2_5TeV02_pythia6_cfi.py,v $'),
+    annotation = cms.untracked.string('PYQUEN DYmumu Mass 30 Tune Z2 at 5.023 TeV')
 )
 
 ProductionFilterSequence = cms.Sequence(generator)
