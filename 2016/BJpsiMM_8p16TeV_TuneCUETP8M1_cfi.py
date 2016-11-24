@@ -70,7 +70,8 @@ mumugenfilter = cms.EDFilter("MCParticlePairFilter",
     MinEta = cms.untracked.vdouble(-2.5, -2.5),
     ParticleCharge = cms.untracked.int32(-1),
     ParticleID1 = cms.untracked.vint32(13),
-    ParticleID2 = cms.untracked.vint32(13)
+    ParticleID2 = cms.untracked.vint32(13),
+    BetaBoost = cms.untracked.double(-0.434)
 )
 
 
