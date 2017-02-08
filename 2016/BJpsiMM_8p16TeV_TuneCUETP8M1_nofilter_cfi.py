@@ -55,11 +55,11 @@ bfilter = cms.EDFilter("PythiaFilter",
 
 
 oniafilter = cms.EDFilter("PythiaFilter",
-                          Status = cms.untracked.int32(2),
-                          MaxEta = cms.untracked.double(1000.0),
-                          MinEta = cms.untracked.double(-1000.0),
-                          MinPt = cms.untracked.double(0.0),
-                          ParticleID = cms.untracked.int32(443)
+                          Status = cms.untracked.vint32(2,2),
+                          MaxEta = cms.untracked.vdouble(1000.0,1000.0),
+                          MinEta = cms.untracked.vdouble(-1000.0,-1000.0),
+                          MinPt = cms.untracked.vdouble(0.0,0.0),
+                          ParticleID = cms.untracked.vint32(443,100443)
                           )
 
 ProductionFilterSequence = cms.Sequence(generator*bfilter*oniafilter)
