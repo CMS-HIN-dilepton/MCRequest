@@ -54,7 +54,7 @@ bfilter = cms.EDFilter("PythiaFilter",
                        )
 
 
-oniafilter = cms.EDFilter("PythiaFilter",
+oniafilter = cms.EDFilter("MCSingleParticleFilter",
                           Status = cms.untracked.vint32(2,2),
                           MaxEta = cms.untracked.vdouble(1000.0,1000.0),
                           MinEta = cms.untracked.vdouble(-1000.0,-1000.0),
