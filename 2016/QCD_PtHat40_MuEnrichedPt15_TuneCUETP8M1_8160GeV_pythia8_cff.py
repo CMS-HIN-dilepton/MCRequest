@@ -37,6 +37,7 @@ mugenfilter = cms.EDFilter("MCSmartSingleParticleFilter",
       MaxEta = cms.untracked.vdouble(2.5),
       ParticleID = cms.untracked.vint32(13),
       Status = cms.untracked.vint32(1),
+      BetaBoost = cms.untracked.double(-0.434),
       # Decay cuts are in mm
       MaxDecayRadius = cms.untracked.vdouble(2000.),
       MinDecayZ = cms.untracked.vdouble(-4000.),
