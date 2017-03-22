@@ -9,3 +9,4 @@ The convention is very confusing. In short all of the following correspond to th
 - PbP in the vertex smearing option
 - no "reverse" in the cfi name
 - BetaBoost = +0.434 in the gen filter
+- protonSide = 1 for PyQuen
