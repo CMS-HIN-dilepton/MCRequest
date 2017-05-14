@@ -41,7 +41,7 @@ mugenfilter = cms.EDFilter("MCSmartSingleParticleFilter",
       MaxDecayRadius = cms.untracked.vdouble(2000., 2000.),
       MinDecayZ = cms.untracked.vdouble(-4000., -4000.),
       MaxDecayZ = cms.untracked.vdouble(4000., 4000.),
-      BetaBoost = cms.untracked.double(-0.434)
+#      BetaBoost = cms.untracked.double(-0.434)
 )
 
 configurationMetadata = cms.untracked.PSet(
