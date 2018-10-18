@@ -10,3 +10,9 @@ The convention is very confusing. In short all of the following correspond to th
 - no "reverse" in the cfi name
 - BetaBoost = +0.434 in the gen filter
 - protonSide = 1 for PyQuen
+
+## For updating
+'Charmonium:gg2ccbar(3S1)[3S1(1)]gm = on', for prompt charm
+'Bottomonium:gg2bbbar(3S1)[3S1(1)]gm = on', for upsilon
+https://hypernews.cern.ch/HyperNews/CMS/get/generators/2437/1.html
+http://home.thep.lu.se/Pythia/pythia82html/OniaProcesses.html
