@@ -28,6 +28,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
             'Bottomonium:gg2bbbar(3S1)[3PJ(8)]g = on',
             'Bottomonium:qg2bbbar(3S1)[3PJ(8)]q = on',
             'Bottomonium:qqbar2bbbar(3S1)[3PJ(8)]g = on',
+            'Bottomonium:gg2ccbar(3S1)[3S1(1)]gm = on',
             '200553:onMode = off',            # ignore cross-section re-weighting (CSAMODE=6) since selecting wanted decay mode
             '200553:onIfAny = 13 -13',
             'PhaseSpace:pTHatMin = 2.',
