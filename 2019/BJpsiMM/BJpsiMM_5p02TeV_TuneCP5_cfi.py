@@ -1,37 +1,37 @@
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
+from GeneratorInterface.EvtGenInterface.EvtGenSetting_cff import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
-                         filterEfficiency = cms.untracked.double(0.109),
                          pythiaHepMCVerbosity = cms.untracked.bool(False),
-                         crossSection = cms.untracked.double(1430000.0),
                          comEnergy = cms.double(5020.0),
                          maxEventsToPrint = cms.untracked.int32(0),
+                         ExternalDecays = cms.PSet(
+        EvtGen130 = cms.untracked.PSet(
+            decay_table = cms.string('GeneratorInterface/EvtGenInterface/data/DECAY_2010.DEC'),
+            particle_property_file = cms.FileInPath('GeneratorInterface/EvtGenInterface/data/evt.pdl'),
+            user_decay_file        = cms.vstring('GeneratorInterface/ExternalDecays/data/incl_BtoJpsi_mumu.dec'),
+            list_forced_decays     = cms.vstring('MyB0',
+                                                 'Myanti-B0',
+                                                 'MyB+',
+                                                 'MyB-',
+                                                 'MyB_s0',
+                                                 'Myanti-B_s0'),
+            operates_on_particles = cms.vint32()
+            ),
+        parameterSets = cms.vstring('EvtGen130')
+        ),
                          PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
         pythia8CP5SettingsBlock,
         processParameters = cms.vstring(
-            'Bottomonium:states(3S1) = 200553', # filter on 553 and prevents other onium states decaying to 553, so we should turn the others off
-            'Bottomonium:O(3S1)[3S1(1)] = 3.54',
-            'Bottomonium:O(3S1)[3S1(8)] = 0.075',
-            'Bottomonium:O(3S1)[1S0(8)] = 0.1',
-            'Bottomonium:O(3S1)[3P0(8)] = 0.1',
-            'Bottomonium:gg2bbbar(3S1)[3S1(1)]g = on',
-            'Bottomonium:gg2bbbar(3S1)[3S1(8)]g = on',
-            'Bottomonium:qg2bbbar(3S1)[3S1(8)]q = on',
-            'Bottomonium:qqbar2bbbar(3S1)[3S1(8)]g = on',
-            'Bottomonium:gg2bbbar(3S1)[1S0(8)]g = on',
-            'Bottomonium:qg2bbbar(3S1)[1S0(8)]q = on',
-            'Bottomonium:qqbar2bbbar(3S1)[1S0(8)]g = on',
-            'Bottomonium:gg2bbbar(3S1)[3PJ(8)]g = on',
-            'Bottomonium:qg2bbbar(3S1)[3PJ(8)]q = on',
-            'Bottomonium:qqbar2bbbar(3S1)[3PJ(8)]g = on',
-            'Bottomonium:gg2bbbar(3S1)[3S1(1)]gm = on',
-            '200553:onMode = off',            # ignore cross-section re-weighting (CSAMODE=6) since selecting wanted decay mode
-            '200553:onIfAny = 13 -13',
+            'HardQCD:gg2bbbar    = on ',
+            'HardQCD:qqbar2bbbar = on ',
+            'HardQCD:hardbbbar   = on',
             'PhaseSpace:pTHatMin = 2.',
+
             ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CP5Settings',
@@ -40,14 +40,23 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         )
 )
 
+generator.PythiaParameters.processParameters.extend(EvtGenExtraParticles)
 
-# Next two muon filter are derived from muon reconstruction
+###########
+# Filters #
+###########
+# Filter only pp events which produce a B->Jpsi(mumu)X
+
+bfilter = cms.EDFilter("PythiaFilter",
+    ParticleID = cms.untracked.int32(5)
+)
+
 oniafilter = cms.EDFilter("PythiaFilter",
     Status = cms.untracked.int32(2),
     MaxEta = cms.untracked.double(1000.0),
     MinEta = cms.untracked.double(-1000.0),
     MinPt = cms.untracked.double(0.0),
-    ParticleID = cms.untracked.int32(200553)
+    ParticleID = cms.untracked.int32(443)
 )
 
 mumugenfilter = cms.EDFilter("MCParticlePairFilter",
@@ -61,7 +70,4 @@ mumugenfilter = cms.EDFilter("MCParticlePairFilter",
     ParticleID2 = cms.untracked.vint32(13)
 )
 
-
-
-ProductionFilterSequence = cms.Sequence(generator*oniafilter*mumugenfilter)
-
+ProductionFilterSequence = cms.Sequence(generator*bfilter*oniafilter*mumugenfilter)

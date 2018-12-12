@@ -38,30 +38,27 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
                                     'processParameters',
                                     )
         )
-                         )
+)
 
 generator.PythiaParameters.processParameters.extend(EvtGenExtraParticles)
-
 
 ###########
 # Filters #
 ###########
 # Filter only pp events which produce a B->Jpsi(mumu)X
 
-
 bfilter = cms.EDFilter("PythiaFilter",
-                       ParticleID = cms.untracked.int32(5)
-                       )
+    ParticleID = cms.untracked.int32(5)
+)
 
-
-oniafilter = cms.EDFilter("MCSingleParticleFilter",
-                          Status = cms.untracked.vint32(2,2),
-                          MaxEta = cms.untracked.vdouble(1000.0,1000.0),
-                          MinEta = cms.untracked.vdouble(-1000.0,-1000.0),
-                          MinPt = cms.untracked.vdouble(0.0,0.0),
-                          ParticleID = cms.untracked.vint32(443,100443)
-                          )
-
+oniafilter = cms.EDFilter("PythiaFilter",
+    Status = cms.untracked.int32(2),
+    MaxEta = cms.untracked.double(1000.0),
+    MinEta = cms.untracked.double(-1000.0),
+    MinPt = cms.untracked.double(6.0),
+    MaxPt = cms.untracked.double(9.0),
+    ParticleID = cms.untracked.int32(100443)
+)
 
 mumugenfilter = cms.EDFilter("MCParticlePairFilter",
     Status = cms.untracked.vint32(1, 1),
@@ -73,8 +70,6 @@ mumugenfilter = cms.EDFilter("MCParticlePairFilter",
     ParticleID1 = cms.untracked.vint32(13),
     ParticleID2 = cms.untracked.vint32(13)
 )
-
-
 
 ProductionFilterSequence = cms.Sequence(generator*bfilter*oniafilter*mumugenfilter)
 
