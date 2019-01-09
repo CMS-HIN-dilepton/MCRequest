@@ -32,6 +32,9 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
             '553:onMode = off',            # ignore cross-section re-weighting (CSAMODE=6) since selecting wanted decay mode
             '553:onIfAny = 13 -13',
             'PhaseSpace:pTHatMin = 2.',
+            'PhaseSpace:bias2Selection = on',
+            'PhaseSpace:bias2SelectionPow = 0.7',
+            'PhaseSpace:bias2SelectionRef = 1'
             ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CP5Settings',

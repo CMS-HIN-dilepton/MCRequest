@@ -31,7 +31,9 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
             'HardQCD:qqbar2bbbar = on ',
             'HardQCD:hardbbbar   = on',
             'PhaseSpace:pTHatMin = 2.',
-
+            'PhaseSpace:bias2Selection = on',
+            'PhaseSpace:bias2SelectionPow = 2.2',
+            'PhaseSpace:bias2SelectionRef = 1'
             ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CP5Settings',
@@ -45,7 +47,7 @@ generator.PythiaParameters.processParameters.extend(EvtGenExtraParticles)
 ###########
 # Filters #
 ###########
-# Filter only pp events which produce a B->Jpsi(mumu)X
+# Filter only pp events which produce a B->Psi2S(mumu)X
 
 bfilter = cms.EDFilter("PythiaFilter",
     ParticleID = cms.untracked.int32(5)
