@@ -5,7 +5,18 @@ from GeneratorInterface.EvtGenInterface.EvtGenSetting_cff import *
 
 # fragment more "inclusive" in terms of decays from b hadrons, inspired from BPH's MC request https://its.cern.ch/jira/projects/CMSBPHMC/issues/CMSBPHMC-40?filter=allopenissues
 
-# CAVEAT: very low efficiency!!! 10^-4
+# ------------------------------------
+# GenXsecAnalyzer:
+# ------------------------------------
+# Before Filter: total cross section = 2.168e+08 +- 6.844e+05 pb
+# Filter efficiency (taking into account weights)= (54) / (100000) = 5.400e-04 +- 7.346e-05
+# Filter efficiency (event-level)= (54) / (100000) = 5.400e-04 +- 7.346e-05    [TO BE USED IN MCM]
+
+# After filter: final cross section = 1.171e+05 +- 1.593e+04 pb
+# After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
+# After filter: final equivalent lumi for 1M events (1/fb) = 8.541e-03 +- 1.162e-03
+
+# 0.172 sec/event, 340 kB/event
 
 _generator = cms.EDFilter("Pythia8GeneratorFilter",
     pythiaPylistVerbosity = cms.untracked.int32(0),
@@ -69,7 +80,7 @@ jpsifilter = cms.EDFilter(
     NumberDaughters = cms.untracked.int32(2),
     ParticleID      = cms.untracked.int32(443),
     DaughterIDs     = cms.untracked.vint32(13, -13),
-    MinPt           = cms.untracked.vdouble(0.5, 0.5),
+    MinPt           = cms.untracked.vdouble(0.9, 0.9),
     MinEta          = cms.untracked.vdouble(-2.5, -2.5),
     MaxEta          = cms.untracked.vdouble( 2.5,  2.5),
 )

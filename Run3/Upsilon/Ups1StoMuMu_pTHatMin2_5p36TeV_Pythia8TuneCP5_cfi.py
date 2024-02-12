@@ -1,12 +1,23 @@
+# ------------------------------------
+# GenXsecAnalyzer:
+# ------------------------------------
+# Before Filter: total cross section = 1.776e+05 +- 8.903e+02 pb
+# Filter efficiency (taking into account weights)= (1198.65) / (2748.55) = 4.361e-01 +- 5.378e-03
+# Filter efficiency (event-level)= (4471) / (10000) = 4.471e-01 +- 4.972e-03    [TO BE USED IN MCM]
+
+# After filter: final cross section = 7.745e+04 +- 1.031e+03 pb
+# After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
+# After filter: final equivalent lumi for 1M events (1/fb) = 1.291e-02 +- 1.724e-04
+
+# 1.488 sec/event, 313 kB/event
+
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
-                         #filterEfficiency = cms.untracked.double(0.109),
                          pythiaHepMCVerbosity = cms.untracked.bool(False),
-                         #crossSection = cms.untracked.double(1430000.0),
                          comEnergy = cms.double(5362.0),
                          maxEventsToPrint = cms.untracked.int32(0),
                          PythiaParameters = cms.PSet(
@@ -30,8 +41,11 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
             'Bottomonium:qqbar2bbbar(3S1)[3PJ(8)]g = on',
             'Bottomonium:gg2bbbar(3S1)[3S1(1)]gm = on',#added Colour-singlet production of 3S1 bottomonium states via gg to bbbar[3S1(1)] g with a hard gamma.
             '553:onMode = off',            # ignore cross-section re-weighting (CSAMODE=6) since selecting wanted decay mode
-            '553:onIfAny = 13 -13',
+            '553:onIfAny = 13 -13',         # only decay to dimuon
             'PhaseSpace:pTHatMin = 2.',
+            'PhaseSpace:bias2Selection = on',
+            'PhaseSpace:bias2SelectionPow = 0.7',
+            'PhaseSpace:bias2SelectionRef = 1'
             ),
         parameterSets = cms.vstring('pythia8CommonSettings',
                                     'pythia8CP5Settings',
@@ -40,12 +54,24 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         )
 )
 
+# Next two muon filter are derived from muon reconstruction
 oniafilter = cms.EDFilter("PythiaFilter",
     Status = cms.untracked.int32(2),
-    MaxEta = cms.untracked.double(1000.0),
-    MinEta = cms.untracked.double(-1000.0),
+    MaxEta = cms.untracked.double(100.0),
+    MinEta = cms.untracked.double(-100.0),
     MinPt = cms.untracked.double(0.0),
     ParticleID = cms.untracked.int32(553)
 )
 
-ProductionFilterSequence = cms.Sequence(generator*oniafilter)
+mumugenfilter = cms.EDFilter("MCParticlePairFilter",
+    Status = cms.untracked.vint32(1, 1),
+    MinPt = cms.untracked.vdouble(2.5, 2.5),
+    MinP = cms.untracked.vdouble(2.5, 2.5),
+    MaxEta = cms.untracked.vdouble(2.5, 2.5),
+    MinEta = cms.untracked.vdouble(-2.5, -2.5),
+    ParticleCharge = cms.untracked.int32(-1),
+    ParticleID1 = cms.untracked.vint32(13),
+    ParticleID2 = cms.untracked.vint32(13)
+)
+
+ProductionFilterSequence = cms.Sequence(generator*oniafilter*mumugenfilter)

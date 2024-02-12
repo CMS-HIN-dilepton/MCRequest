@@ -1,23 +1,34 @@
+# ------------------------------------
+# GenXsecAnalyzer:
+# ------------------------------------
+# Before Filter: total cross section = 8.829e+06 +- 6.238e+04 pb
+# Filter efficiency (taking into account weights)= (144.829) / (885.574) = 1.635e-01 +- 5.654e-03
+# Filter efficiency (event-level)= (1083) / (5000) = 2.166e-01 +- 5.826e-03    [TO BE USED IN MCM]
+
+# After filter: final cross section = 1.444e+06 +- 5.095e+04 pb
+# After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
+# After filter: final equivalent lumi for 1M events (1/fb) = 6.926e-04 +- 2.445e-05
+
+# 0.661 sec/event, 296 kB/event
+
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
-                         #filterEfficiency = cms.untracked.double(0),
                          pythiaHepMCVerbosity = cms.untracked.bool(False),
-                         #crossSection = cms.untracked.double(0),
                          comEnergy = cms.double(5362.0),
                          maxEventsToPrint = cms.untracked.int32(0),
                          PythiaParameters = cms.PSet(
         pythia8CommonSettingsBlock,
         pythia8CP5SettingsBlock,
         processParameters = cms.vstring(
-            'Charmonium:states(3S1) = 100443', # filter on psi(2S) and prevents other onium states decaying to it, so we should turn the others off
-            'Charmonium:O(3S1)[3S1(1)] = 0.76',
-            'Charmonium:O(3S1)[3S1(8)] = 0.005',
-            'Charmonium:O(3S1)[1S0(8)] = 0.004',
-            'Charmonium:O(3S1)[3P0(8)] = 0.004',
+            'Charmonium:states(3S1) = 443', # filter on 443 and prevents other onium states decaying to 443, so we should turn the others off
+            'Charmonium:O(3S1)[3S1(1)] = 1.16',
+            'Charmonium:O(3S1)[3S1(8)] = 0.0119',
+            'Charmonium:O(3S1)[1S0(8)] = 0.01',
+            'Charmonium:O(3S1)[3P0(8)] = 0.01',
             'Charmonium:gg2ccbar(3S1)[3S1(1)]g = on',
             'Charmonium:gg2ccbar(3S1)[3S1(8)]g = on',
             'Charmonium:qg2ccbar(3S1)[3S1(8)]q = on',
@@ -29,11 +40,11 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
             'Charmonium:qg2ccbar(3S1)[3PJ(8)]q = on',
             'Charmonium:qqbar2ccbar(3S1)[3PJ(8)]g = on',
             'Charmonium:gg2ccbar(3S1)[3S1(1)]gm = on',
-            '100443:onMode = off',      # ignore cross-section re-weighting (CSAMODE=6) since selecting wanted decay mode
-            '100443:onIfAny = 13 -13',
+            '443:onMode = off',            # ignore cross-section re-weighting (CSAMODE=6) since selecting wanted decay mode
+            '443:onIfAny = 13 -13',
             'PhaseSpace:pTHatMin = 2.',
             'PhaseSpace:bias2Selection = on',
-            'PhaseSpace:bias2SelectionPow = 2.7',
+            'PhaseSpace:bias2SelectionPow = 1.3',
             'PhaseSpace:bias2SelectionRef = 1'
             ),
         parameterSets = cms.vstring('pythia8CommonSettings',
@@ -41,14 +52,14 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
                                     'processParameters',
                                     )
         )
-)
+                         )
 
 oniafilter = cms.EDFilter("PythiaFilter",
     Status = cms.untracked.int32(2),
     MaxEta = cms.untracked.double(10.0),
     MinEta = cms.untracked.double(-10.0),
     MinPt = cms.untracked.double(0.0),
-    ParticleID = cms.untracked.int32(100443)
+    ParticleID = cms.untracked.int32(443)
 )
 
 mumugenfilter = cms.EDFilter("MCParticlePairFilter",
