@@ -2,6 +2,19 @@ import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
 
+# ------------------------------------
+# GenXsecAnalyzer:
+# ------------------------------------
+# Before Filter: total cross section = 3.342e+03 +- 1.759e+01 pb
+# Filter efficiency (taking into account weights)= (1164) / (10000) = 1.164e-01 +- 3.207e-03
+# Filter efficiency (event-level)= (1164) / (10000) = 1.164e-01 +- 3.207e-03    [TO BE USED IN MCM]
+
+# After filter: final cross section = 3.890e+02 +- 1.091e+01 pb
+# After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
+# After filter: final equivalent lumi for 1M events (1/fb) = 2.571e+00 +- 7.215e-02
+
+# 0.386 sec / event, 300 kB /event
+
 generator = cms.EDFilter("Pythia8GeneratorFilter",
                          maxEventsToPrint = cms.untracked.int32(0),
                          pythiaPylistVerbosity = cms.untracked.int32(0),
