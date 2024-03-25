@@ -1,17 +1,17 @@
 # ------------------------------------
 # GenXsecAnalyzer:
 # ------------------------------------
-# Before Filter: total cross section = 1.773e+07 +- 1.605e+05 pb
-# Filter efficiency (taking into account weights)= (1160) / (3000) = 3.867e-01 +- 8.891e-03
-# Filter efficiency (event-level)= (1160) / (3000) = 3.867e-01 +- 8.891e-03    [TO BE USED IN MCM]
+# Before Filter: total cross section = 1.784e+07 +- 1.986e+05 pb
+# Filter efficiency (taking into account weights)= (875) / (2000) = 4.375e-01 +- 1.109e-02
+# Filter efficiency (event-level)= (875) / (2000) = 4.375e-01 +- 1.109e-02    [TO BE USED IN MCM]
 
-# After filter: final cross section = 6.855e+06 +- 1.694e+05 pb
+# After filter: final cross section = 7.805e+06 +- 2.161e+05 pb
 # After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
-# After filter: final equivalent lumi for 1M events (1/fb) = 1.459e-04 +- 3.608e-06
+# After filter: final equivalent lumi for 1M events (1/fb) = 1.281e-04 +- 3.550e-06
 
-# 0.445 sec/output event, 249 kB/output event
+# 0.427 sec/output event, 253 kB/output event
 
-# generated with command line options: Configuration/GenProduction/python/JpsiEE_Tune2017.py --mc --eventcontent RAWSIM --datatier GEN-SIM --conditions 130X_mcRun3_2023_realistic_HI_v18 --beamspot Realistic2023PbPbCollision --step GEN,SIM --geometry DB:Extended --customise Configuration/DataProcessing/Utils.addMonitoring --era Run3_pp_on_PbPb --nThreads 4 --no_exec -n 3000
+# generated with command line options: Configuration/GenProduction/python/JpsiEE_Tune2017.py --mc --eventcontent RAWSIM --datatier GEN-SIM --conditions 130X_mcRun3_2023_realistic_HI_v18 --beamspot Realistic2023PbPbCollision --step GEN,SIM --geometry DB:Extended --customise Configuration/DataProcessing/Utils.addMonitoring --era Run3_pp_on_PbPb --nThreads 4 --no_exec -n 2000
 
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
@@ -63,9 +63,9 @@ oniafilter = cms.EDFilter("PythiaFilter",
 elelgenfilter = cms.EDFilter("MCParticlePairFilter",
     Status = cms.untracked.vint32(1, 1),
     MinPt = cms.untracked.vdouble(0.5, 0.5),
-    MinP = cms.untracked.vdouble(0.5, 0.5),
-    MaxEta = cms.untracked.vdouble(2.7, 2.7),
-    MinEta = cms.untracked.vdouble(-2.7, -2.7),
+    MinP = cms.untracked.vdouble(0., 0.),
+    MaxEta = cms.untracked.vdouble(3.0, 3.0),
+    MinEta = cms.untracked.vdouble(-3.0, -3.0),
     ParticleCharge = cms.untracked.int32(-1),
     ParticleID1 = cms.untracked.vint32(11),
     ParticleID2 = cms.untracked.vint32(11)
