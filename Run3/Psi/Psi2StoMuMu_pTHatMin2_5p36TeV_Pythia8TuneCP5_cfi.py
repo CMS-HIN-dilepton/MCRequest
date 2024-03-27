@@ -1,19 +1,21 @@
+# with command lines under CMSSW_13_0_18: --mc --eventcontent RAWSIM --pileup HiMixGEN --datatier GEN-SIM --conditions 130X_mcRun3_2023_realistic_HI_v18 --beamspot MatchHI --step GEN,SIM --scenario HeavyIons --geometry DB:Extended --era Run3_pp_on_PbPb --pileup_input "dbs:/MinBias_Drum5F_5p36TeV_hydjet/HINPbPbSpring23GS-130X_mcRun3_2023_realistic_HI_v18-v2/GEN-SIM"  --nThreads 4 --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 4000
+
 # ------------------------------------
 # GenXsecAnalyzer:
 # ------------------------------------
-# Before Filter: total cross section = 3.977e+06 +- 2.717e+04 pb
-# Filter efficiency (taking into account weights)= (143.745) / (819.266) = 1.755e-01 +- 5.890e-03
-# Filter efficiency (event-level)= (1167) / (5000) = 2.334e-01 +- 5.982e-03    [TO BE USED IN MCM]
+# Before Filter: total cross section = 3.957e+06 +- 3.007e+04 pb
+# Filter efficiency (taking into account weights)= (125.74) / (665.921) = 1.888e-01 +- 6.843e-03
+# Filter efficiency (event-level)= (967) / (4000) = 2.417e-01 +- 6.770e-03    [TO BE USED IN MCM]
 
-# After filter: final cross section = 6.978e+05 +- 2.391e+04 pb
+# After filter: final cross section = 7.471e+05 +- 2.766e+04 pb
 # After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
-# After filter: final equivalent lumi for 1M events (1/fb) = 1.433e-03 +- 4.912e-05
+# After filter: final equivalent lumi for 1M events (1/fb) = 1.339e-03 +- 4.958e-05
 
-# 0.736 sec/event, 299 kB/event
+# 0.347 sec/event, 827 kB/event
 
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
-from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
+from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
@@ -52,7 +54,7 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
                                     'processParameters',
                                     )
         )
-                         )
+)
 
 oniafilter = cms.EDFilter("PythiaFilter",
     Status = cms.untracked.int32(2),

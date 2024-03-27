@@ -1,21 +1,21 @@
 # ------------------------------------
 # GenXsecAnalyzer:
 # ------------------------------------
-# Before Filter: total cross section = 1.784e+07 +- 1.986e+05 pb
-# Filter efficiency (taking into account weights)= (875) / (2000) = 4.375e-01 +- 1.109e-02
-# Filter efficiency (event-level)= (875) / (2000) = 4.375e-01 +- 1.109e-02    [TO BE USED IN MCM]
+# Before Filter: total cross section = 1.781e+07 +- 1.043e+05 pb
+# Filter efficiency (taking into account weights)= (3187) / (7000) = 4.553e-01 +- 5.952e-03
+# Filter efficiency (event-level)= (3187) / (7000) = 4.553e-01 +- 5.952e-03    [TO BE USED IN MCM]
 
-# After filter: final cross section = 7.805e+06 +- 2.161e+05 pb
+# After filter: final cross section = 8.107e+06 +- 1.161e+05 pb
 # After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
-# After filter: final equivalent lumi for 1M events (1/fb) = 1.281e-04 +- 3.550e-06
+# After filter: final equivalent lumi for 1M events (1/fb) = 1.234e-04 +- 1.771e-06
 
-# 0.427 sec/output event, 253 kB/output event
+# 0.286 sec/output event, 241 kB/output event
 
 # generated with command line options: Configuration/GenProduction/python/JpsiEE_Tune2017.py --mc --eventcontent RAWSIM --datatier GEN-SIM --conditions 130X_mcRun3_2023_realistic_HI_v18 --beamspot Realistic2023PbPbCollision --step GEN,SIM --geometry DB:Extended --customise Configuration/DataProcessing/Utils.addMonitoring --era Run3_pp_on_PbPb --nThreads 4 --no_exec -n 2000
 
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
-from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
+from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),

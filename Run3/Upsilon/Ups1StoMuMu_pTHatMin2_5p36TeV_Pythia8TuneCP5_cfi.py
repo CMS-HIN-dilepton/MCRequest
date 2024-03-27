@@ -1,19 +1,21 @@
+# with command lines under CMSSW_13_0_18: --mc --eventcontent RAWSIM --pileup HiMixGEN --datatier GEN-SIM --conditions 130X_mcRun3_2023_realistic_HI_v18 --beamspot MatchHI --step GEN,SIM --scenario HeavyIons --geometry DB:Extended --era Run3_pp_on_PbPb --pileup_input "dbs:/MinBias_Drum5F_5p36TeV_hydjet/HINPbPbSpring23GS-130X_mcRun3_2023_realistic_HI_v18-v2/GEN-SIM"  --nThreads 4 --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 4000
+
 # ------------------------------------
 # GenXsecAnalyzer:
 # ------------------------------------
-# Before Filter: total cross section = 1.776e+05 +- 8.903e+02 pb
-# Filter efficiency (taking into account weights)= (1198.65) / (2748.55) = 4.361e-01 +- 5.378e-03
-# Filter efficiency (event-level)= (4471) / (10000) = 4.471e-01 +- 4.972e-03    [TO BE USED IN MCM]
+# Before Filter: total cross section = 1.765e+05 +- 1.410e+03 pb
+# Filter efficiency (taking into account weights)= (452.38) / (1101.18) = 4.108e-01 +- 8.432e-03
+# Filter efficiency (event-level)= (1727) / (4000) = 4.318e-01 +- 7.832e-03    [TO BE USED IN MCM]
 
-# After filter: final cross section = 7.745e+04 +- 1.031e+03 pb
+# After filter: final cross section = 7.253e+04 +- 1.597e+03 pb
 # After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
-# After filter: final equivalent lumi for 1M events (1/fb) = 1.291e-02 +- 1.724e-04
+# After filter: final equivalent lumi for 1M events (1/fb) = 1.379e-02 +- 3.040e-04
 
-# 1.488 sec/event, 313 kB/event
+# 0.554 sec/ output event, 810 kB/event
 
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
-from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
+from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import *
 
 generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
@@ -57,8 +59,8 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
 # Next two muon filter are derived from muon reconstruction
 oniafilter = cms.EDFilter("PythiaFilter",
     Status = cms.untracked.int32(2),
-    MaxEta = cms.untracked.double(100.0),
-    MinEta = cms.untracked.double(-100.0),
+    MaxEta = cms.untracked.double(10.0),
+    MinEta = cms.untracked.double(-10.0),
     MinPt = cms.untracked.double(0.0),
     ParticleID = cms.untracked.int32(553)
 )

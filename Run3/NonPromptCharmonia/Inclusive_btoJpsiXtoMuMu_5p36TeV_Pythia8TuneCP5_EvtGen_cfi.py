@@ -1,22 +1,22 @@
-import FWCore.ParameterSet.Config as cms
-from Configuration.Generator.Pythia8CommonSettings_cfi import *
-from Configuration.Generator.MCTunes2017.PythiaCP5Settings_cfi import *
-from GeneratorInterface.EvtGenInterface.EvtGenSetting_cff import *
-
-# fragment more "inclusive" in terms of decays from b hadrons, inspired from BPH's MC request https://its.cern.ch/jira/projects/CMSBPHMC/issues/CMSBPHMC-40?filter=allopenissues
+# with command lines under CMSSW_13_0_18: --mc --eventcontent RAWSIM --pileup HiMixGEN --datatier GEN-SIM --conditions 130X_mcRun3_2023_realistic_HI_v18 --beamspot MatchHI --step GEN,SIM --scenario HeavyIons --geometry DB:Extended --era Run3_pp_on_PbPb --pileup_input "dbs:/MinBias_Drum5F_5p36TeV_hydjet/HINPbPbSpring23GS-130X_mcRun3_2023_realistic_HI_v18-v2/GEN-SIM"  --nThreads 4 --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 50000
 
 # ------------------------------------
 # GenXsecAnalyzer:
 # ------------------------------------
-# Before Filter: total cross section = 2.168e+08 +- 6.844e+05 pb
-# Filter efficiency (taking into account weights)= (54) / (100000) = 5.400e-04 +- 7.346e-05
-# Filter efficiency (event-level)= (54) / (100000) = 5.400e-04 +- 7.346e-05    [TO BE USED IN MCM]
+# Before Filter: total cross section = 2.177e+08 +- 9.719e+05 pb
+# Filter efficiency (taking into account weights)= (16) / (50000) = 3.200e-04 +- 7.999e-05
+# Filter efficiency (event-level)= (16) / (50000) = 3.200e-04 +- 7.999e-05    [TO BE USED IN MCM]
 
-# After filter: final cross section = 1.171e+05 +- 1.593e+04 pb
+# After filter: final cross section = 6.968e+04 +- 1.742e+04 pb
 # After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
-# After filter: final equivalent lumi for 1M events (1/fb) = 8.541e-03 +- 1.162e-03
+# After filter: final equivalent lumi for 1M events (1/fb) = 1.435e-02 +- 3.588e-03
 
-# 0.172 sec/event, 340 kB/event
+# 0.053 sec/output event, 812 kB/output event
+
+import FWCore.ParameterSet.Config as cms
+from Configuration.Generator.Pythia8CommonSettings_cfi import *
+from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import *
+from GeneratorInterface.EvtGenInterface.EvtGenSetting_cff import *
 
 _generator = cms.EDFilter("Pythia8GeneratorFilter",
     pythiaPylistVerbosity = cms.untracked.int32(0),
@@ -74,16 +74,23 @@ generator.PythiaParameters.processParameters.extend(EvtGenExtraParticles)
 # Filters #
 ###########
 
-jpsifilter = cms.EDFilter(
-    "PythiaDauVFilter",
-    verbose         = cms.untracked.int32(0),
-    NumberDaughters = cms.untracked.int32(2),
-    ParticleID      = cms.untracked.int32(443),
-    DaughterIDs     = cms.untracked.vint32(13, -13),
-    MinPt           = cms.untracked.vdouble(0.9, 0.9),
-    MinEta          = cms.untracked.vdouble(-2.5, -2.5),
-    MaxEta          = cms.untracked.vdouble( 2.5,  2.5),
+jpsifilter = cms.EDFilter("PythiaFilter",
+    Status = cms.untracked.int32(2),
+    MaxEta = cms.untracked.double(10.0),
+    MinEta = cms.untracked.double(-10.0),
+    MinPt = cms.untracked.double(0.0),
+    ParticleID = cms.untracked.int32(443)
 )
 
+mumugenfilter = cms.EDFilter("MCParticlePairFilter",
+    Status = cms.untracked.vint32(1, 1),
+    MinPt = cms.untracked.vdouble(1.0, 1.0),
+    MinP = cms.untracked.vdouble(2.5, 2.5),
+    MaxEta = cms.untracked.vdouble(2.5, 2.5),
+    MinEta = cms.untracked.vdouble(-2.5, -2.5),
+    ParticleCharge = cms.untracked.int32(-1),
+    ParticleID1 = cms.untracked.vint32(13),
+    ParticleID2 = cms.untracked.vint32(13)
+)
 
-ProductionFilterSequence = cms.Sequence(generator*jpsifilter)
+ProductionFilterSequence = cms.Sequence(generator*jpsifilter*mumugenfilter)
