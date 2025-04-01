@@ -15,7 +15,7 @@ import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
 from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import *
 
-generator = cms.EDFilter("Pythia8GeneratorFilter",
+_generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
                          pythiaHepMCVerbosity = cms.untracked.bool(False),
                          comEnergy = cms.double(5362.0),
@@ -53,6 +53,9 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
                                     )
         )
 )
+
+from GeneratorInterface.Core.ExternalGeneratorFilter import ExternalGeneratorFilter
+generator = ExternalGeneratorFilter(_generator)
 
 # Next two muon filter are derived from muon reconstruction
 oniafilter = cms.EDFilter("PythiaFilter",

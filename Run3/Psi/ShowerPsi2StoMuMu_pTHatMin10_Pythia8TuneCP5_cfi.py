@@ -4,7 +4,7 @@ from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import 
 
 # see https://www.pythia.org/latest-manual/OniaShowers.html
 
-generator = cms.EDFilter("Pythia8GeneratorFilter",
+_generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
                          pythiaHepMCVerbosity = cms.untracked.bool(False),
                          comEnergy = cms.double(5362.0),
@@ -27,10 +27,13 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         )
 )
 
+from GeneratorInterface.Core.ExternalGeneratorFilter import ExternalGeneratorFilter
+generator = ExternalGeneratorFilter(_generator)
+
 oniafilter = cms.EDFilter("PythiaFilter",
     Status = cms.untracked.int32(2),
-    MaxEta = cms.untracked.double(4),
-    MinEta = cms.untracked.double(-4),
+    MaxEta = cms.untracked.double(10),
+    MinEta = cms.untracked.double(-10),
     MinPt = cms.untracked.double(0.0),
     ParticleID = cms.untracked.int32(100443)
 )

@@ -6,7 +6,7 @@ from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import 
 # Filter efficiency (taking into account weights)= (1822) / (10000) = 1.822e-01 +- 3.860e-03
 # Filter efficiency (event-level)= (1822) / (10000) = 1.822e-01 +- 3.860e-03    [TO BE USED IN MCM]
 
-generator = cms.EDFilter("Pythia8GeneratorFilter",
+_generator = cms.EDFilter("Pythia8GeneratorFilter",
                          pythiaPylistVerbosity = cms.untracked.int32(0),
                          pythiaHepMCVerbosity = cms.untracked.bool(False),
                          comEnergy = cms.double(5362.0),
@@ -36,6 +36,9 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
         )
     )
 )
+
+from GeneratorInterface.Core.ExternalGeneratorFilter import ExternalGeneratorFilter
+generator = ExternalGeneratorFilter(_generator)
 
 FourMuonFilter = cms.EDFilter("FourLepFilter", # require 4-mu in the final state
         MinPt = cms.untracked.double(1.2),

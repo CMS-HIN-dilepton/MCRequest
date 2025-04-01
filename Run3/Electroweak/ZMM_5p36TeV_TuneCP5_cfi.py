@@ -15,7 +15,7 @@ from Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi import 
 
 # 0.386 sec / event, 300 kB /event
 
-generator = cms.EDFilter("Pythia8GeneratorFilter",
+_generator = cms.EDFilter("Pythia8GeneratorFilter",
                          maxEventsToPrint = cms.untracked.int32(0),
                          pythiaPylistVerbosity = cms.untracked.int32(0),
                          comEnergy = cms.double(5362.0),
@@ -33,6 +33,9 @@ generator = cms.EDFilter("Pythia8GeneratorFilter",
                                     )
         )
 )
+
+from GeneratorInterface.Core.ExternalGeneratorFilter import ExternalGeneratorFilter
+generator = ExternalGeneratorFilter(_generator)
 
 mumugenfilter = cms.EDFilter("MCParticlePairFilter",
     Status         = cms.untracked.vint32(1, 1),
