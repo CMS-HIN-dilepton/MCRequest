@@ -3,15 +3,16 @@
 # ------------------------------------
 # GenXsecAnalyzer:
 # ------------------------------------
-# Before Filter: total cross section = 3.957e+06 +- 3.007e+04 pb
-# Filter efficiency (taking into account weights)= (125.74) / (665.921) = 1.888e-01 +- 6.843e-03
-# Filter efficiency (event-level)= (967) / (4000) = 2.417e-01 +- 6.770e-03    [TO BE USED IN MCM]
+# Before Filter: total cross section = 4.045e+06 +- 1.957e+04 pb
+# Filter efficiency (taking into account weights)= (377.6) / (1660.72) = 2.274e-01 +- 4.707e-03
+# Filter efficiency (event-level)= (2753) / (10000) = 2.753e-01 +- 4.467e-03    [TO BE USED IN MCM]
 
-# After filter: final cross section = 7.471e+05 +- 2.766e+04 pb
+# After filter: final cross section = 9.197e+05 +- 1.955e+04 pb
 # After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
-# After filter: final equivalent lumi for 1M events (1/fb) = 1.339e-03 +- 4.958e-05
+# After filter: final equivalent lumi for 1M events (1/fb) = 1.087e-03 +- 2.314e-05
 
-# 0.347 sec/event, 827 kB/event
+# pp: 0.145 sec/event, 296 kB/event
+# hydjet embedding: 0.347 sec/event, 827 kB/event
 
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
@@ -61,8 +62,8 @@ generator = ExternalGeneratorFilter(_generator)
 
 oniafilter = cms.EDFilter("PythiaFilter",
     Status = cms.untracked.int32(2),
-    MaxEta = cms.untracked.double(10.0),
-    MinEta = cms.untracked.double(-10.0),
+    MaxRapidity = cms.untracked.double(3.0),
+    MinRapidity = cms.untracked.double(-3.0),
     MinPt = cms.untracked.double(0.0),
     ParticleID = cms.untracked.int32(100443)
 )
@@ -70,7 +71,7 @@ oniafilter = cms.EDFilter("PythiaFilter",
 mumugenfilter = cms.EDFilter("MCParticlePairFilter",
     Status = cms.untracked.vint32(1, 1),
     MinPt = cms.untracked.vdouble(1., 1.),
-    MinP = cms.untracked.vdouble(2.5, 2.5),
+    MinP = cms.untracked.vdouble(2.0, 2.0),
     MaxEta = cms.untracked.vdouble(2.5, 2.5),
     MinEta = cms.untracked.vdouble(-2.5, -2.5),
     ParticleCharge = cms.untracked.int32(-1),
