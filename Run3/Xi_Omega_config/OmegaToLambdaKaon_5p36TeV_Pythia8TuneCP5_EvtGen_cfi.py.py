@@ -66,7 +66,7 @@ generator = ExternalGeneratorFilter(_generator)
 generator.PythiaParameters.processParameters.extend(EvtGenExtraParticles)
 
 
-LambdaDaufilter = cms.EDFilter("PythiaMomDauFilter",
+OmegaDaufilter = cms.EDFilter("PythiaMomDauFilter",
                                ParticleID = cms.untracked.int32(3334),
                                MomMinPt = cms.untracked.double(0.0),
                                MomMinEta = cms.untracked.double(-2.4),
@@ -77,7 +77,7 @@ LambdaDaufilter = cms.EDFilter("PythiaMomDauFilter",
                                BetaBoost = cms.untracked.double(0.0),
                             )
 
-Lambdarapidityfilter = cms.EDFilter("PythiaFilter",
+OmegaRapidityfilter = cms.EDFilter("PythiaFilter",
                                 ParticleID = cms.untracked.int32(3334),
                                 MinPt = cms.untracked.double(0.0),
                                 MaxPt = cms.untracked.double(500.),
@@ -86,4 +86,4 @@ Lambdarapidityfilter = cms.EDFilter("PythiaFilter",
                             )
 
 
-ProductionFilterSequence = cms.Sequence(generator*LambdaDaufilter*Lambdarapidityfilter)
+ProductionFilterSequence = cms.Sequence(generator*OmegaDaufilter*OmegaRapidityfilter)
