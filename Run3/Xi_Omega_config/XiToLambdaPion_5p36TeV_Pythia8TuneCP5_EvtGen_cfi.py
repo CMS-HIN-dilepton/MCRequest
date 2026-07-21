@@ -4,15 +4,15 @@
 #GenXsecAnalyzer:
 #------------------------------------
 #Before Filter: total cross section = 5.728e+10 +- 0.000e+00 pb
-#Filter efficiency (taking into account weights)= (2909) / (100000) = 2.909e-02 +- 5.314e-04
-#Filter efficiency (event-level)= (2909) / (100000) = 2.909e-02 +- 5.314e-04    [TO BE USED IN MCM]
+#Filter efficiency (taking into account weights)= (4736) / (100000) = 4.736e-02 +- 6.717e-04
+#Filter efficiency (event-level)= (4736) / (100000) = 4.736e-02 +- 6.717e-04    [TO BE USED IN MCM]
 
-#After filter: final cross section = 1.666e+09 +- 3.044e+07 pb
+#After filter: final cross section = 2.713e+09 +- 3.847e+07 pb
 #After filter: final fraction of events with negative weights = 0.000e+00 +- 0.000e+00
-#After filter: final equivalent lumi for 1M events (1/fb) = 6.001e-07 +- 1.098e-08
+#After filter: final equivalent lumi for 1M events (1/fb) = 3.686e-07 +- 5.241e-09
 
 
-# 0.008106 sec/output event, 296 kB/output event
+# 0.017983 sec/output event, 288 kB/output event
 
 import FWCore.ParameterSet.Config as cms
 from Configuration.Generator.Pythia8CommonSettings_cfi import *
@@ -70,8 +70,6 @@ generator.PythiaParameters.processParameters.extend(EvtGenExtraParticles)
 XiDaufilter = cms.EDFilter("PythiaMomDauFilter",
                                ParticleID = cms.untracked.int32(3312),
                                MomMinPt = cms.untracked.double(0.0),
-                               MomMinEta = cms.untracked.double(-2.4),
-                               MomMaxEta = cms.untracked.double(2.4),
                                DaughterIDs = cms.untracked.vint32(3122, -211),
                                NumberDaughters = cms.untracked.int32(2),
                                NumberDescendants = cms.untracked.int32(0),
